@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule Count per Event</title>
+</head>
+<body>
+    <h1>Schedule Count per Event</h1>
+    <table>
+        <tr>
+            <th>Event</th>
+            <th>Schedule Count</th>
+        </tr>
+        {% for event, schedule_count in schedule_counts %}
+            <tr>
+                <td>{{ event.title }}</td>
+                <td>{{ schedule_count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

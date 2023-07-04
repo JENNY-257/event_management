@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Speaker List</title>
+</head>
+<body>
+    <h1>Schedule List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Topic</th>
+          <th>Speaker</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for schedule in schedules %}
+          <tr>
+            <td>{{ schedule.event_name }}</td>
+            <td>{{ schedule.start_time }}</td>
+            <td>{{ schedule.end_time }}</td>
+            <td>{{ schedule.topic }}</td>
+            <td>{{ schedule.speaker }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">No schedules available</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</body>
+</html>

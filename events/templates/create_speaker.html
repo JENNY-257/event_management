@@ -1,0 +1,18 @@
+<!-- create_speaker.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Speaker</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <h1>Create Speaker</h1>
+  <form method="POST" action="{% url 'events:create_speaker' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Speaker</button>
+  </form>
+</body>
+</html>

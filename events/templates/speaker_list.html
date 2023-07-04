@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Speaker List</title>
+</head>
+<body>
+    <h1>Speaker List</h1>
+    <ul>
+        {% for speaker in speakers %}
+        <li><a href="{% url 'events:speaker_detail' speaker.name %}">{{ speaker.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

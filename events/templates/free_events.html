@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Free Events</title>
+</head>
+<body>
+    <h1>Free Events</h1>
+    <ul>
+        {% for event in free_events %}
+            <li>{{ event.title }}</li>
+        {% empty %}
+            <li>No free events</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

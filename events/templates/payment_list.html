@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment List</title>
+</head>
+<body>
+    <h1>Payment List</h1>
+    <ul>
+        {% for payment in payments %}
+            <li>{{ payment }}</li>
+        {% empty %}
+            <li>No payments available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

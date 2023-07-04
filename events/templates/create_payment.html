@@ -1,0 +1,18 @@
+<!-- create_payment.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Payment</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <h1>Create Payment</h1>
+  <form method="POST" action="{% url 'events:create_payment' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Payment</button>
+  </form>
+</body>
+</html>

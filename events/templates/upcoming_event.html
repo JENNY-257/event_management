@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upcoming Events</title>
+</head>
+<body>
+    <h1>Upcoming Events</h1>
+    <ul>
+        {% for event in upcoming_events %}
+            <li>{{ event.title }}</li>
+        {% empty %}
+            <li>No upcoming events</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

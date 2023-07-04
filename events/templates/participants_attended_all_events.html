@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Participants Attended All Events</title>
+</head>
+<body>
+    <h1>Participants Attended All Events</h1>
+    <ul>
+        {% for participants in participant %}
+            <li>{{ participants.name }}</li>
+        {% empty %}
+            <li>No participants have attended all events.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

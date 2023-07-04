@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Participant Count per Event</title>
+</head>
+<body>
+    <h1>Participant Count per Event</h1>
+    <table>
+        <tr>
+            <th>Event</th>
+            <th>Participant Count</th>
+        </tr>
+        {% for event, count in participant %}
+           <tr>
+               <td>{{ event.events }}</td>
+               <td>{{ count }}</td>
+           </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

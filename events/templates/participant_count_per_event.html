@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Participant Count per Event</title>
+    <title>Event Participant Count</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
-    <h1>Participant Count per Event</h1>
+    <h1>Event Participant Count</h1>
     <table>
         <tr>
             <th>Event</th>
             <th>Participant Count</th>
         </tr>
-        {% for event, count in participant %}
-           <tr>
-               <td>{{ event.events }}</td>
-               <td>{{ count }}</td>
-           </tr>
+        {% for event in participant_counts %}
+            <tr>
+                <td>{{ event.events.first.title }}</td>
+                <td>{{ event.num_participants }}</td>
+            </tr>
         {% endfor %}
     </table>
 </body>

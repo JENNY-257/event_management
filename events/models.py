@@ -81,5 +81,5 @@ class Payment(models.Model):
     payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS_CHOICES)
 
     def __str__(self):
-        return f"{self.participant.name} "
+        return f"{self.participant.name}, {self.event.title}, {self.paid_amount}, {self.payment_status}"
 

@@ -26,7 +26,7 @@
       <label for="speaker">Speaker:</label>
       <select name="speaker" id="speaker">
         <option value="">None</option>
-        {% for speaker in speakers %}
+        {% for speaker in Speakers %}
           <option value="{{ speaker.id }}">{{ speaker.name }}</option>
         {% endfor %}
       </select>

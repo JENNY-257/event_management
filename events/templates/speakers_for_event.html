@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Speakers for Event</title>
+</head>
+<body>
+    <h1>Speakers for Event - {{ event.title }}</h1>
+    <ul>
+        {% for speaker in event.speakers.all %}
+            <li>{{ speaker.name }}</li>
+        {% empty %}
+            <li>No speakers assigned for this event.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

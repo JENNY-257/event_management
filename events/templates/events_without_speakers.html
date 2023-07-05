@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Events Without Speakers</title>
+</head>
+<body>
+    <h1>Events Without Speakers</h1>
+    <ul>
+        {% for event in events_without_speakers %}
+            <li>{{ event.title }}</li>
+        {% empty %}
+            <li>No events found without speakers.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,15 +2,54 @@
 <html>
 <head>
     <title>Payment List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .empty-row {
+            text-align: center;
+            font-style: italic;
+            color: #999;
+        }
+    </style>
 </head>
 <body>
     <h1>Payment List</h1>
-    <ul>
-        {% for payment in payments %}
-            <li>{{ payment }}</li>
-        {% empty %}
-            <li>No payments available.</li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Participant Name</th>
+                <th>Event Title</th>
+                <th>Paid Amount</th>
+                <th>Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+                <tr>
+                    <td>{{ payment.participant.name }}</td>
+                    <td><a href="{% url 'events:total-amount-paid-for-event' payment.event.id %}">{{ payment.event.title }}</a></td>
+                    <td>{{ payment.paid_amount }}</td>
+                    <td>{{ payment.payment_status }}</td>
+                </tr>
+            {% empty %}
+                <tr class="empty-row">
+                    <td colspan="4">No payments available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

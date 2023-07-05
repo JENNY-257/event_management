@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Avg
 from django.utils import timezone
+from datetime import date
+from datetime import timedelta
 from .models import Event, Category, Speaker, Participant, Payment, Schedule
 from .forms import EventForm, ScheduleForm, SpeakerForm,  ParticipantForm, PaymentForm
 
@@ -32,7 +34,7 @@ def create_schedule(request):
         form = ScheduleForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('event_list')
+            return redirect('/events/schedules')
     else:
         form = ScheduleForm()
     return render(request, 'create_schedule.html', {'form': form})
@@ -81,7 +83,7 @@ def create_payment(request):
     return render(request, 'create_payment.html', {'form': form})
 
 def participant_detail(request, email):
-    participant = (Participant, email==email)
+    participant = Participant.objects.get(email=email)
     context = {'participant': participant}
     return render(request, 'participant_detail.html', context)
 
@@ -91,7 +93,7 @@ def schedule_list(request):
     return render(request, 'schedules.html', context)
 
 def speaker_detail(request, name):
-    speaker = (Speaker, name==name)
+    speaker = Speaker.objects.get(name=name)
     return render(request, 'speaker_detail.html', {'speaker': speaker})
 
 def upcoming_events(request):
@@ -114,18 +116,17 @@ def paid_events(request):
     return render(request, 'paid_events.html', {'paid_events': paid_events})
 
 def participant_count_per_event(request):
-    participant_counts = Event.objects.annotate(num_participants= Count('participant'))
+    participant_counts = Participant.objects.annotate(num_participants= Count('events'))
     return render(request, 'participant_count_per_event.html', {'participant_counts': participant_counts})
-
 
 def schedule_count_per_event(request):
     schedule_counts = Event.objects.annotate(num_schedules=Count('schedule'))
     return render(request, 'schedule_count_per_event.html', {'schedule_counts': schedule_counts})
 
-def total_amount_paid_for_event(request, title):
-    event = Event.objects.get(title=title)
-    total_amount_paid = event.payment.aggregate(total_amount=Sum('amount_paid'))['total_amount']
-    return render(request, 'total_amount_paid_for_event.html', {'event': event, 'total_amount_paid': total_amount_paid})
+def total_amount_paid_for_event(request, event_id):
+    event = Event.objects.get(pk=event_id)
+    total_payment = Payment.objects.filter(event=event).aggregate(total_amount=Sum('paid_amount'))
+    return render(request, 'total_amount_paid_for_event.html', {'event': event, 'total_payment': total_payment})
 
 def participants_attended_all_events(request):
     all_events = Event.objects.all()
@@ -134,3 +135,32 @@ def participants_attended_all_events(request):
         if all(participant in event.participants.all() for event in all_events):
             participants_attended_all.append(participant)
     return render(request, 'participants_attended_all_events.html', {'participants_attended_all': participants_attended_all})
+
+
+
+def average_price_of_paid_events(request):
+    average_price = Event.objects.filter(payment__isnull=False).aggregate(avg_price=Avg('payment__paid_amount'))
+    formatted_avg_price = '{:.2f}'.format(average_price['avg_price'])
+    return render(request, 'average_price_of_paid_events.html', {'average_price': formatted_avg_price})
+
+
+def participants_attending_event(request, title):
+    event = Event.objects.get(title=title)
+    participants = event.participant_set.all()
+    return render(request, 'participants_attending_event.html', {'event': event, 'participants': participants})
+
+def speakers_for_event(request, title):
+    event = Event.objects.get(title=title)
+    speakers = event.speakers.all()
+    return render(request, 'speakers_for_event.html', {'event': event, 'speakers': speakers})
+
+def events_in_date_range(request):
+    today = date.today()
+    start_date = today
+    end_date = today + timedelta(days=7)
+    events = Event.objects.filter(start_date__gte=start_date, end_date__lte=end_date)
+    return render(request, 'events_in_date_range.html', {'events': events})
+
+def events_without_speakers(request):
+    events_without_speakers = Event.objects.filter(speakers__isnull=True)
+    return render(request, 'events_without_speakers.html', {'events_without_speakers': events_without_speakers})

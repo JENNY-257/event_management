@@ -6,8 +6,8 @@
 <body>
     <h1>Participants Attended All Events</h1>
     <ul>
-        {% for participants in participant %}
-            <li>{{ participants.name }}</li>
+        {% for participant in participants_attended_all %}
+            <li>{{ participant.name }}</li>
         {% empty %}
             <li>No participants have attended all events.</li>
         {% endfor %}
